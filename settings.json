@@ -1,0 +1,10 @@
+{
+    "cmake.sourceDirectory": "C:/Users/User/2024vscode/c++大一/example/.vscode",
+    "files.associations": {
+        "*.tcc": "cpp",
+        "iostream": "cpp",
+        "chrono": "cpp",
+        "cmath": "cpp",
+        "random": "cpp"
+    }
+}
