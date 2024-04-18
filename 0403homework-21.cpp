@@ -41,3 +41,8 @@ class Time {
             return abs(totalSec - t.totalSec);
         }
 };
+
+int main() {
+    
+    return 0;
+}

@@ -144,3 +144,8 @@ public:
             cout << "(" << num << ")";
     }
 };
+
+int main() {
+
+    return 0;
+}
