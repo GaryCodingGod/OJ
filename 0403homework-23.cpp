@@ -48,7 +48,7 @@ public:
             timeParts.push_back(part);
         }
         if (timeParts.size() == 3 && isNumber(timeParts[0]) && isNumber(timeParts[1]) && isNumber(timeParts[2])) {
-            hours = stoi(timeParts[0]);
+            hours = stoi(timeParts[0]);     
             minutes = stoi(timeParts[1]);
             seconds = stoi(timeParts[2]);
         }

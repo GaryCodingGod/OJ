@@ -7,7 +7,7 @@ private:
     vector<int> streets;
     vector<int> avenues;
 
-    // 使用插入排序算法對數字向量進行排序
+    // 使用插入排序對數字進行排序
     void sortVector(vector<int> &v) {
         for (size_t i = 1; i < v.size(); i++) {
             int key = v[i];
@@ -27,7 +27,6 @@ public:
         avenues.push_back(avenue);
     }
 
-    // 計算會面點的函數，不再返回 pair，而是通過引用返回街道和大道的中位數
     void findMeetingPoint(int &medianStreet, int &medianAvenue) {
         sortVector(streets);
         sortVector(avenues);
@@ -49,7 +48,7 @@ int main() {
         }
         
         int medianStreet, medianAvenue;
-        city.findMeetingPoint(medianStreet, medianAvenue); // 計算會面點
+        city.findMeetingPoint(medianStreet, medianAvenue); 
         cout << "(Street: " << medianStreet << ", Avenue: " << medianAvenue << ")" << endl;
     }
     return 0;
