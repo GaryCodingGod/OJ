@@ -15,7 +15,7 @@ public:
     }
 };
 
-int main() {//
+int main() {
     License checker;
     int Number;
 

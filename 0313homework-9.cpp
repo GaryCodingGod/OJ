@@ -28,7 +28,7 @@ int main(){
 
 //另解
 /*#include <iostream>
-#include <cmath>x
+#include <cmath>
   using namespace std;
 
   class toll{

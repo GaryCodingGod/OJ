@@ -16,7 +16,7 @@ class Segment {
             cout << disval << endl;
         }
 };
-int main() {//
+int main() {
     int n;
     cin >> n;
     double x1,x2,y1,y2;

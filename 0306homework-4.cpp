@@ -11,7 +11,7 @@ public:
     }
 
     double Velocity1(){
-        return distance/time;//
+        return distance/time;
     }
 };
 

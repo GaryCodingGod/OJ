@@ -3,7 +3,7 @@
 
 using namespace std;
 
-//
+
 class Point{  
   public:
    Point(float xVal, float yVal){

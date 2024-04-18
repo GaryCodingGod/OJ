@@ -11,7 +11,7 @@ public:
     double getY() { return y; }
 };
 
-class Segment {//
+class Segment {
 public:
     Point p1, p2;
     Segment(Point _p1, Point _p2);
