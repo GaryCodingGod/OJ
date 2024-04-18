@@ -6,7 +6,7 @@ class Point{
     Point(){};
     float x,y;
 
-    Point(float x1,float y1){
+    Point(float x1,float y1){//
         x = x1;
         y = y1;
     }

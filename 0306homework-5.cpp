@@ -14,7 +14,7 @@ class Overlay{
         if(x2 <= y1 || y2 <= x1)
         cout << "no overlay" << endl;
         else
-        cout << "overlay" << endl;
+        cout << "overlay" << endl;//
     }
 };
 int main(){
