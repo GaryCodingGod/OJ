@@ -1,59 +1,77 @@
 #include <iostream>
-#include <string>
-#include <ctime>
 #include <sstream>
+#include <string>
+#include <vector>
 #include <iomanip>
 
 using namespace std;
 
-class Date {
+class DateTime {
 private:
-    int year, month, day;
+    int year, month, day, hours, minutes, seconds;
+
+    bool isNumber(const string& str) const { //檢查字串是否為數字
+        for (char const &c : str) {
+            if (isdigit(c) == 0) return false;
+        }
+        return true;
+    }
 
 public:
-    // Default constructor sets date to 1900/01/01
-    Date() : year(1900), month(1), day(1) {}
+    DateTime() : year(1900), month(1), day(1), hours(0), minutes(0), seconds(0) {}
 
-    // Constructor that takes a date string in "yyyy/mm/dd" format
-    Date(const string& date) {
-        sscanf(date.c_str(), "%d/%d/%d", &year, &month, &day);
+    DateTime(const string& dateTimeStr) {
+        stringstream dateStream, timeStream;
+        string dateStr, timeStr;
+        //用Find函數尋找日期和時間之間的空格分隔
+        string::size_type spacePos = dateTimeStr.find(' ');
+        if (spacePos != string::npos) {
+            dateStr = dateTimeStr.substr(0, spacePos); // 讀取空格之前的日期
+            timeStr = dateTimeStr.substr(spacePos + 1);// 讀取空格之後的時間
+        }
+
+        dateStream.str(dateStr);
+        string part;
+        vector<string> dateParts;
+        while (getline(dateStream, part, '/')) {
+            dateParts.push_back(part);//將分割後的字符串添加到 vector 中
+        }
+        if (dateParts.size() == 3 && isNumber(dateParts[0]) && isNumber(dateParts[1]) && isNumber(dateParts[2])) {
+            year = stoi(dateParts[0]);
+            month = stoi(dateParts[1]);
+            day = stoi(dateParts[2]);
+        }
+      
+        timeStream.str(timeStr);
+        vector<string> timeParts;
+        while (getline(timeStream, part, ':')) {
+            timeParts.push_back(part);
+        }
+        if (timeParts.size() == 3 && isNumber(timeParts[0]) && isNumber(timeParts[1]) && isNumber(timeParts[2])) {
+            hours = stoi(timeParts[0]);
+            minutes = stoi(timeParts[1]);
+            seconds = stoi(timeParts[2]);
+        }
     }
 
-    // Function to return a string representation of the date in "yyyy/mm/dd" format
     string toString() const {
-        ostringstream oss;
-        oss << year << "/" << setfill('0') << setw(2) << month << "/" << setw(2) << day;
-        return oss.str();
-    }
-
-    // Overloaded operator- to find the difference in days between two dates
-    int operator-(const Date& other) const {
-        // Convert both dates to tm struct
-        struct tm a = {0, 0, 0, day, month - 1, year - 1900};
-        struct tm b = {0, 0, 0, other.day, other.month - 1, other.year - 1900};
-        
-        // Convert tm structs to time_t
-        time_t x = mktime(&a);
-        time_t y = mktime(&b);
-        
-        // Calculate difference in seconds and then convert to days
-        double difference = difftime(x, y);
-        return static_cast<int>(difference / (60 * 60 * 24));
+        stringstream ss;
+        ss << setw(4) << setfill('0') << year << '/'
+           << setw(2) << setfill('0') << month << '/'
+           << setw(2) << setfill('0') << day << ' '
+           << setw(2) << setfill('0') << hours << ':'
+           << setw(2) << setfill('0') << minutes << ':'
+           << setw(2) << setfill('0') << seconds;
+        return ss.str();
     }
 };
-
 int main() {
-    string date1String, date2String;
-    
-    cin >> date1String;
-    cin >> date2String;
-    
-    Date date1(date1String);
-    Date date2(date2String);
+    string dateTimeStr;
+    while (getline(cin, dateTimeStr)) {
+        if (dateTimeStr.empty()) break; 
 
-    int difference = date2 - date1;
-    
-    cout << difference << endl;
-    
+        DateTime dateTime(dateTimeStr);
+        cout << dateTime.toString() << endl;
+    }
     return 0;
 }
