@@ -1,131 +1,80 @@
-#include <iostream>
-#include <cstdlib>
-
+#include <iostream> 
+#include <vector>   
+#include <utility>  // pair模板
+#include <cstring>
+#include <stack>
 using namespace std;
+char maze[1000][1000];
 
-class Fraction {
-private:
-    int numerator;
-    int denominator;
-
-    // 最大公因數
-    static int gcd(int a, int b) {
-        while (b != 0) {
-            int t = b;
-            b = a % b;
-            a = t;
-        }
-        return a;
+void createGrid(int M, int N) {
+    for (int i = 0; i < (N * 2) + 1; ++i)  //天花板(每一列，都有一个下劃線 _ 當作邊界和空格分隔在加字符表示結尾)
+        maze[0][i] = (i % 2 == 1 ? '_' : ' ');
+    maze[0][N*2] = '\0';
+    for (int j = 1; j < M + 1; ++j) { //天花板以下(j 從 1 開始是因為天花板設在第 0 行)
+        for (int k = 0; k < (N * 2) + 1; ++k) 
+            maze[j][k] = (k % 2 == 0 ? '|' : '_');
     }
-
-    // 最小公倍數
-    static int lcm(int a, int b) {
-        return a / gcd(a, b) * b; // 防止溢出
-    }
-
-public:
-    Fraction() : numerator(0), denominator(1) {}
-
-    Fraction(int n, int d) : numerator(n), denominator(d) {
-        if (d == 0) {
-            exit(1); // 分母若為0就退出程式
-        }
-    }
-
-    int getNumerator() const {
-        return numerator;
-    }
-
-    int getDenominator() const {
-        return denominator;
-    }
-
-    void setNumerator(int n) {
-        numerator = n;
-    }
-
-    void setDenominator(int d) {
-        if (d == 0) {
-      
-            exit(1);
-        }
-        denominator = d;
-    }
-
-    void display() const {
-        if (denominator == 1) {
-            cout << numerator;
-        } else {
-            cout << numerator << '/' << denominator;
-        }
-    }
-
-    // 加法運算符重載
-    Fraction operator+(const Fraction& other) const {
-        int lcmDenominator = lcm(denominator, other.denominator);
-        int newNumerator = numerator * (lcmDenominator / denominator) +
-                           other.numerator * (lcmDenominator / other.denominator);
-        int commonDivisor = gcd(newNumerator, lcmDenominator);
-        return Fraction(newNumerator / commonDivisor, lcmDenominator / commonDivisor);
-    }
-
-    // 減法運算符重載
-    Fraction operator-(const Fraction& other) const {
-        int lcmDenominator = lcm(denominator, other.denominator);
-        int newNumerator = numerator * (lcmDenominator / denominator) -
-                           other.numerator * (lcmDenominator / other.denominator);
-        int commonDivisor = gcd(newNumerator, lcmDenominator);
-        return Fraction(newNumerator / commonDivisor, lcmDenominator / commonDivisor);
-    }
-
-    // 乘法運算符重載
-    Fraction operator*(const Fraction& other) const {
-        int newNumerator = numerator * other.numerator;
-        int newDenominator = denominator * other.denominator;
-        int commonDivisor = gcd(newNumerator, newDenominator);
-        return Fraction(newNumerator / commonDivisor, newDenominator / commonDivisor);
-    }
-
-    // 除法運算符重載
-    Fraction operator/(const Fraction& other) const {
-        int newNumerator = numerator * other.denominator;
-        int newDenominator = denominator * other.numerator;
-        int commonDivisor = gcd(newNumerator, newDenominator);
-        return Fraction(newNumerator / commonDivisor, newDenominator / commonDivisor);
-    }
-
-    // 賦值運算符重載
-    Fraction& operator=(const Fraction& other) {
-        if (this != &other) { // 防止自我賦值
-            numerator = other.numerator;
-            denominator = other.denominator;
-        }
-        return *this;
-    }
-
-    // 邏輯非運算符重載 (取倒數)
-    Fraction operator!() const {
-        return Fraction(denominator, numerator);
-    }
-
-    // 插入運算符重載 (用於輸出)
-    friend ostream& operator<<(ostream& out, const Fraction& f) {
-        if (f.denominator == 1) {
-            out << f.numerator;
-        } else {
-            out << f.numerator << '/' << f.denominator;
-        }
-        return out;
-    }
-};
+}
 
 int main() {
-    Fraction f1(1, 2), f2(1, 3), f3;
-    f3 = f1 + f2;
-    cout << "f1 + f2 = " << f3 << endl;
-    f3 = f1 - f2;
-    cout << "f1 - f2 = " << f3 << endl;
+    int t;
+    cin >> t;
 
-    
-    return 0; 
+    while (t--) {
+        stack<pair<int, int>> p; //記錄點 給flip使用
+        int M, N, x, y;
+        cin >> M >> N >> x >> y;
+        createGrid(M, N);
+
+        int checkX = (M+1) - x, checkY = y; // 轉換起始位置到迷宮的索引位置
+        int count = 2;
+        p.push({checkX, checkY});
+        char cmd;
+        while (cin >> cmd && count < M * N) { 
+            if (cmd == 'U') {
+                maze[--checkX][checkY] = ' ';
+                p.push({checkX, checkY});
+                ++count;
+            }
+            else if (cmd == 'D') {
+                maze[checkX][checkY] = ' ';
+                p.push({checkX, checkY});
+                ++checkX;
+                ++count;
+            }
+            else if (cmd == 'L') {
+                maze[checkX][--checkY] = ' ';
+                --checkY;
+                p.push({checkX, checkY});
+                ++count;
+            }
+            else if (cmd == 'R') {
+                maze[checkX][++checkY] = ' ';
+                ++checkY;
+                p.push({checkX, checkY});
+                ++count;
+            } 
+            else { 
+                int num;
+                cin >> num;
+                for (int i = 1; i <= num; ++i) p.pop();
+                checkX = p.top().first, checkY = p.top().second;
+            }
+        }
+        //確保最後一個命令可執行
+        if (cmd == 'U') maze[--checkX][checkY] = ' ';
+        else if (cmd == 'D') maze[++checkX][checkY] = ' ';
+        else if (cmd == 'L') maze[checkX][--checkY] = ' ';
+        else if (cmd == 'R') maze[checkX][++checkY] = ' ';
+
+        for (int i = 0; i < M + 1; ++i) {
+            for (int j = 0; j < (N * 2) + 1; ++j) {
+                if (i == 0 && j == N * 2) continue;//忽略最後一個多餘的下劃線
+                else cout << maze[i][j];
+            }
+            cout << endl;
+        }
+        memset(maze, ' ', sizeof(maze));
+        cout << endl;
+    }
 }
