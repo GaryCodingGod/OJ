@@ -23,7 +23,6 @@ public:
     DateTime(const string& dateTimeStr) {
         stringstream dateStream, timeStream;
         string dateStr, timeStr;
-        //用Find函數尋找日期和時間之間的空格分隔
         string::size_type spacePos = dateTimeStr.find(' ');
         if (spacePos != string::npos) {
             dateStr = dateTimeStr.substr(0, spacePos); // 讀取空格之前的日期
