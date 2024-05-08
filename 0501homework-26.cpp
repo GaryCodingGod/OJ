@@ -1,3 +1,5 @@
+//Question: Define a class PokerCard to represent a poker card.
+//Question: Using comparison operators to compare the sizes of two poker cards
 #include <iostream>
 #include <string>
 #include <cassert>

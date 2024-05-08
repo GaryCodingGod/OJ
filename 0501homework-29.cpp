@@ -1,3 +1,4 @@
+//Question:Reference question 28 to create a class Shape represent a 2D shape
 #include <iostream>
 #include <cmath>
 using namespace std;
