@@ -6,7 +6,7 @@ using namespace std;
 
 class Point{  
   public:
-   Point(float xVal, float yVal){
+   Point(float xVal, float yVal){ //座標點的構造函數
 
     x = xVal;
     y = yVal;
