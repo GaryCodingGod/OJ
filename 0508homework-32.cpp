@@ -6,7 +6,7 @@ using namespace std;
 template<class T>
 class Set {
     private:
-       T element[100];
+       T element[100]; // 保存Set中的元素最大數量為100
        int count;
     public:
         Set(): count(0) {
@@ -38,6 +38,7 @@ class Set {
             int initialCount = count;
             for(int i = 0; i < s.count; i++)
                 add(s.element[i]);
+                
             return count - initialCount;
         }
 
@@ -50,3 +51,11 @@ class Set {
             return false;
         }
 };
+int main(){
+Set<int> s;
+s.add(1);
+
+Set<int> s2 =s;
+s2.add(s);
+
+}

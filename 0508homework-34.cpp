@@ -21,18 +21,18 @@ private:
     vector<int> data;
 
 public:
-    void push(int value) override {
-        data.push_back(value);
+    void push(int value) override { 
+        data.push_back(value); 
     }
 
-    void pop() override {
+    void pop() override { 
         if (empty()) {
             throw out_of_range("Stack is empty");
         }
-        data.pop_back();
+        data.pop_back(); 
     }
 
-    int top() const override {
+    int top() const override { 
         if (empty()) {
             throw out_of_range("Stack is empty");
         }

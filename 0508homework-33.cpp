@@ -51,7 +51,7 @@ class Set {
 
         Set<T> operator+(const Set<T> &s) { //實現兩個Set的聯集
             Set<T> result = *this;
-            result.add(s);
+            result.add(s); //原本就檢查是否有重複的元素，所以直接加入
             return result;
         }
         Set<T> operator-(const Set<T> &s) { //實現兩個Set的交集
