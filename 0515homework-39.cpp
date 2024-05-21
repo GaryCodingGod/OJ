@@ -34,18 +34,18 @@ public:
         int maxLength = 0;
 
         for (int i = n - 1; i >= 0; --i) {
-            int len1, len2;
+            int len1, len2;//火車頭尾插入車廂長度(按照遞減排序)
 
             int pos = binarySearch(tailCheck, cars[i]);
             if (pos == tailCheck.size()) {
-                tailCheck.push_back(cars[i]);
+                tailCheck.push_back(cars[i]); //尾部插入新車廂
                 len2 = tailCheck.size();
             } else {
-                tailCheck[pos] = cars[i];
-                len2 = pos + 1;
+                tailCheck[pos] = cars[i]; 
+                len2 = pos + 1; 
             }
 
-            pos = binarySearch(headCheck, -cars[i]);
+            pos = binarySearch(headCheck, -cars[i]);//-cars[i]是因為要按照遞減排序將車廂重量(取相反數)
             if (pos == headCheck.size()) {
                 headCheck.push_back(-cars[i]);
                 len1 = headCheck.size();
