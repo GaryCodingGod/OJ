@@ -28,7 +28,7 @@ public:
             points[i] = Point(x, y);
         }
 
-        for (int i = 0; i < number - 1; i++) {
+        for (int i = 0; i < number - 1; i++) { // 氣泡排序法，依照 x 座標遞減排序
             for (int j = 0; j < number - i - 1; j++) {
                 if (points[j].x < points[j + 1].x) {
                     Point temp = points[j];
@@ -38,7 +38,7 @@ public:
             }
         }
 
-        double max_height = points[0].y;
+        double max_height = points[0].y; 
         double total_length = 0.0000;
 
         // 計算總長度
