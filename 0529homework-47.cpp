@@ -14,8 +14,8 @@ using namespace std;
             Decoder(char w): word(w) {};
 
             void decodeTheWord() {
-                string input = " 234567890-=ertyuiop[]\\dfghjkl;'cvbnm,./";
-                string output = " `1234567890qwertyuiop[asdfghjklzxcvbnm,";
+                string input = " 234567890-=ertyuiop[]\\dfghjkl;'cvbnm,./"; 
+                string output = " `1234567890qwertyuiop[asdfghjklzxcvbnm,";//這個是找到字串對應的字母
 
                 for (int i = 0; i < input.length(); i++) {
                     if (input[i] == word) {
