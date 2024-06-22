@@ -19,7 +19,7 @@ class GetMaxSquare {
             }
         }
 
-        int countMaxSide() {
+        int countMaxSide() { //計算最大邊長的方法
             int flag = 0, side = 1;
             int top = ctr_row - 1, bottom = ctr_row + 1, left = ctr_col - 1, right = ctr_col + 1;
 
